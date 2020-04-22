@@ -75,3 +75,22 @@ export function createQuiz(req, res) {
       return res.status(500).json({ error: 'Something went wrong' });
     });
 }
+
+export function deleteQuiz(req, res) {
+  const document = db.doc(`/quiz/${req.params.quizId}`);
+  document
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404);
+      }
+      return document.delete();
+    })
+    .then(() => {
+      res.json({ message: 'Delete successfull' });
+    })
+    .catch((err) => {
+      console.error(err); // eslint-disable-line no-console
+      return res.status(500).json({ error: err.code });
+    });
+}
