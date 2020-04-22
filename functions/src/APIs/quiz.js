@@ -94,3 +94,35 @@ export function deleteQuiz(req, res) {
       return res.status(500).json({ error: err.code });
     });
 }
+
+export function editQuiz(req, res) {
+  if (req.body.title.trim() === '') {
+    return res.status(400).json({ title: 'Must not be empty' });
+  }
+
+  if (req.body.date.trim() === '') {
+    return res.status(400).json({ date: 'Must not be empty' });
+  }
+
+  let quizDate;
+  try {
+    quizDate = new Date(req.body.date).toISOString();
+  } catch (err) {
+    return res.status(400).json({ date: 'Invalid' });
+  }
+
+  const document = db.collection('quiz').doc(`${req.params.quizId}`);
+  return document.update({
+    title: req.body.title,
+    date: quizDate,
+  })
+    .then(() => {
+      res.json({ message: 'Updated successfully' });
+    })
+    .catch((err) => {
+      console.error(err); // eslint-disable-line no-console
+      return res.status(500).json({
+        error: err.code,
+      });
+    });
+}
