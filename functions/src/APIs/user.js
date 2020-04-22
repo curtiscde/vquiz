@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import config from '../util/config';
+import validateLoginData from '../util/validators';
 
 firebase.initializeApp(config.firebase);
 
@@ -9,7 +10,10 @@ export default function loginUser(req, res) {
     password: req.body.password,
   };
 
-  firebase
+  const { valid, errors } = validateLoginData(user);
+  if (!valid) return res.status(400).json(errors);
+
+  return firebase
     .auth()
     .signInWithEmailAndPassword(user.email, user.password)
     .then((data) => data.user.getIdToken())
