@@ -1,12 +1,12 @@
-const { db } = require('../util/admin');
+import { db } from '../util/admin';
 
-exports.getAllQuizzes = (request, response) => {
+export default function getAllQuizzes(request, response) {
   db
     .collection('quizzes')
     .orderBy('createdAt', 'desc')
     .get()
     .then((data) => {
-      let quizzes = [];
+      const quizzes = [];
       data.forEach((doc) => {
         quizzes.push({
           quizId: doc.id,
@@ -17,7 +17,8 @@ exports.getAllQuizzes = (request, response) => {
       return response.json(quizzes);
     })
     .catch((err) => {
+      // eslint-disable-next-line no-console
       console.error(err);
       return response.status(500).json({ error: err.code });
     });
-};
+}
