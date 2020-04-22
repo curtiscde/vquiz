@@ -1,0 +1,28 @@
+name: Functions CI
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./functions
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm i
+      working-directory: ${{env.working-directory}}
+    - run: npm run lint
+      working-directory: ${{env.working-directory}}
+    - run: npm run build
+      working-directory: ${{env.working-directory}}
