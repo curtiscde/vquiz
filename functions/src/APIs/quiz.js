@@ -1,6 +1,6 @@
 import { db } from '../util/admin';
 
-export function getAllQuizzes(request, response) {
+export function getAllQuizzes(req, res) {
   db
     .collection('quiz')
     .orderBy('createdAt', 'desc')
@@ -14,12 +14,11 @@ export function getAllQuizzes(request, response) {
           createdAt: doc.data().createdAt,
         });
       });
-      return response.json(quizzes);
+      return res.json(quizzes);
     })
     .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      return response.status(500).json({ error: err.code });
+      console.error(err); // eslint-disable-line no-console
+      return res.status(500).json({ error: err.code });
     });
 }
 
@@ -36,7 +35,43 @@ export function getQuiz(req, res) {
       return res.json(quizData);
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err); // eslint-disable-line no-console
       return res.status(500).json({ error: err.code });
+    });
+}
+
+export function createQuiz(req, res) {
+  if (req.body.title.trim() === '') {
+    return res.status(400).json({ title: 'Must not be empty' });
+  }
+
+  if (req.body.date.trim() === '') {
+    return res.status(400).json({ date: 'Must not be empty' });
+  }
+
+  let quizDate;
+  try {
+    quizDate = new Date(req.body.date).toISOString();
+  } catch (err) {
+    return res.status(400).json({ date: 'Invalid' });
+  }
+
+  const item = {
+    title: req.body.title,
+    date: quizDate,
+    createdAt: new Date().toISOString(),
+  };
+
+  return db
+    .collection('quiz')
+    .add(item)
+    .then((doc) => {
+      const resItem = item;
+      resItem.id = doc.id;
+      return res.json(resItem);
+    })
+    .catch((err) => {
+      console.error(err); // eslint-disable-line no-console
+      return res.status(500).json({ error: 'Something went wrong' });
     });
 }
