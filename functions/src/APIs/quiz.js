@@ -1,8 +1,8 @@
 import { db } from '../util/admin';
 
-export default function getAllQuizzes(request, response) {
+export function getAllQuizzes(request, response) {
   db
-    .collection('quizzes')
+    .collection('quiz')
     .orderBy('createdAt', 'desc')
     .get()
     .then((data) => {
@@ -20,5 +20,23 @@ export default function getAllQuizzes(request, response) {
       // eslint-disable-next-line no-console
       console.error(err);
       return response.status(500).json({ error: err.code });
+    });
+}
+
+export function getQuiz(req, res) {
+  db
+    .doc(`/quiz/${req.params.quizId}`)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404);
+      }
+      const quizData = doc.data();
+      quizData.id = doc.id;
+      return res.json(quizData);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
     });
 }
