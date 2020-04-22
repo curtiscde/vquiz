@@ -9,6 +9,7 @@ export function getAllQuizzes(req, res) {
       const quizzes = [];
       data.forEach((doc) => {
         quizzes.push({
+          date: doc.data().date,
           quizId: doc.id,
           title: doc.data().title,
           createdAt: doc.data().createdAt,
