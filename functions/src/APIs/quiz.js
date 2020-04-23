@@ -4,6 +4,7 @@ import { isEmpty } from '../util/validators';
 export function getAllQuizzes(req, res) {
   db
     .collection('quiz')
+    .where('userId', '==', req.user.uid)
     .orderBy('createdAt', 'desc')
     .get()
     .then((data) => {
@@ -32,6 +33,9 @@ export function getQuiz(req, res) {
       if (!doc.exists) {
         return res.status(404);
       }
+      if (doc.data().userId !== req.user.uid) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
       const quizData = doc.data();
       quizData.id = doc.id;
       return res.json(quizData);
@@ -59,9 +63,10 @@ export function createQuiz(req, res) {
   }
 
   const item = {
-    title: req.body.title,
-    date: quizDate,
     createdAt: new Date().toISOString(),
+    date: quizDate,
+    title: req.body.title,
+    userId: req.user.uid,
   };
 
   return db
@@ -85,6 +90,9 @@ export function deleteQuiz(req, res) {
     .then((doc) => {
       if (!doc.exists) {
         return res.status(404);
+      }
+      if (doc.data().userId !== req.user.uid) {
+        return res.status(403).json({ error: 'Unauthorized' });
       }
       return document.delete();
     })
@@ -114,10 +122,23 @@ export function editQuiz(req, res) {
   }
 
   const document = db.collection('quiz').doc(`${req.params.quizId}`);
-  return document.update({
-    title: req.body.title,
-    date: quizDate,
-  })
+  return document
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404);
+      }
+      if (doc.data().userId !== req.user.uid) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
+      return document;
+    })
+    .then((doc) => {
+      return doc.update({
+        title: req.body.title,
+        date: quizDate,
+      })
+    })
     .then(() => {
       res.json({ message: 'Updated successfully' });
     })

@@ -62,7 +62,6 @@ export function signUpUser(req, res) {
       token = idtoken;
       const userCredentials = {
         username: newUser.username,
-        email: newUser.email,
         createdAt: new Date().toISOString(),
         userId,
       };

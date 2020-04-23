@@ -1,4 +1,5 @@
 import express from 'express';
+import auth from './util/auth';
 import {
   getAllQuizzes,
   getQuiz,
@@ -12,11 +13,11 @@ const functions = require('firebase-functions');
 
 const app = express();
 
-app.get('/quizzes', getAllQuizzes);
-app.get('/quiz/:quizId', getQuiz);
-app.post('/quiz', createQuiz);
-app.put('/quiz/:quizId', editQuiz);
-app.delete('/quiz/:quizId', deleteQuiz);
+app.get('/quizzes', auth, getAllQuizzes);
+app.get('/quiz/:quizId', auth, getQuiz);
+app.post('/quiz', auth, createQuiz);
+app.put('/quiz/:quizId', auth, editQuiz);
+app.delete('/quiz/:quizId', auth, deleteQuiz);
 
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);
