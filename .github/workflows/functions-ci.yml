@@ -13,7 +13,8 @@ jobs:
         node-version: [10.x]
     
     defaults:
-      working-directory: ./functions
+      run:
+        working-directory: ./functions
 
 
     steps:
