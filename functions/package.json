@@ -2,7 +2,7 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint .",
-    "build": "babel src --out-dir lib",
+    "build": "babel src --out-dir lib --ignore '**/*.test.js'",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
