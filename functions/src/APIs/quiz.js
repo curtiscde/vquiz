@@ -1,4 +1,5 @@
 import { db } from '../util/admin';
+import { isEmpty } from '../util/validators';
 
 export function getAllQuizzes(req, res) {
   db
@@ -42,11 +43,11 @@ export function getQuiz(req, res) {
 }
 
 export function createQuiz(req, res) {
-  if (req.body.title.trim() === '') {
+  if (isEmpty(req.body.title)) {
     return res.status(400).json({ title: 'Must not be empty' });
   }
 
-  if (req.body.date.trim() === '') {
+  if (isEmpty(req.body.date)) {
     return res.status(400).json({ date: 'Must not be empty' });
   }
 
@@ -97,11 +98,11 @@ export function deleteQuiz(req, res) {
 }
 
 export function editQuiz(req, res) {
-  if (req.body.title.trim() === '') {
+  if (isEmpty(req.body.title)) {
     return res.status(400).json({ title: 'Must not be empty' });
   }
 
-  if (req.body.date.trim() === '') {
+  if (isEmpty(req.body.date)) {
     return res.status(400).json({ date: 'Must not be empty' });
   }
 
