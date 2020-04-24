@@ -6,6 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js --port 3000",
     "lint": "eslint .",
+    "clean:build": "rimraf ./build && mkdir build",
+    "prebuild": "npm run clean:build",
     "build": "webpack --config webpack.config.prod.js"
   },
   "repository": {
