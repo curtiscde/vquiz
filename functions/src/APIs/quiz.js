@@ -133,12 +133,10 @@ export function editQuiz(req, res) {
       }
       return document;
     })
-    .then((doc) => {
-      return doc.update({
-        title: req.body.title,
-        date: quizDate,
-      })
-    })
+    .then((doc) => doc.update({
+      title: req.body.title,
+      date: quizDate,
+    }))
     .then(() => {
       res.json({ message: 'Updated successfully' });
     })

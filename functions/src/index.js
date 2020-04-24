@@ -12,6 +12,7 @@ import {
 import { loginUser, signUpUser } from './APIs/user';
 
 const functions = require('firebase-functions');
+
 const app = express();
 
 firebase.initializeApp(config.firebase);
