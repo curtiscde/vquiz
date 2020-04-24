@@ -1,5 +1,7 @@
 import express from 'express';
+import firebase from 'firebase';
 import auth from './util/auth';
+import config from './util/config';
 import {
   getAllQuizzes,
   getQuiz,
@@ -10,8 +12,9 @@ import {
 import { loginUser, signUpUser } from './APIs/user';
 
 const functions = require('firebase-functions');
-
 const app = express();
+
+firebase.initializeApp(config.firebase);
 
 app.get('/quizzes', auth, getAllQuizzes);
 app.get('/quiz/:quizId', auth, getQuiz);

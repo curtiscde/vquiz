@@ -1,9 +1,6 @@
 import firebase from 'firebase';
-import config from '../util/config';
 import { db } from '../util/admin';
 import { validateLoginData, validateSignUpData } from '../util/validators';
-
-firebase.initializeApp(config.firebase);
 
 export function loginUser(req, res) {
   const user = {
