@@ -1,0 +1,19 @@
+{
+  "name": "vquiz-app",
+  "version": "0.0.0",
+  "description": "vquiz app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curtistimson/vquiz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/curtistimson/vquiz/issues"
+  },
+  "homepage": "https://github.com/curtistimson/vquiz#readme"
+}
