@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,29 +17,28 @@ const styles = (theme) => ({
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   customError: {
     color: 'red',
     fontSize: '0.8rem',
-    marginTop: 10
+    marginTop: 10,
   },
   progess: {
-    position: 'absolute'
-  }
+    position: 'absolute',
+  },
 });
-
 
 
 const Login = ({ ...props }) => {
@@ -50,10 +49,9 @@ const Login = ({ ...props }) => {
   const [fields, setFields] = useState({});
 
 
-
   function handleChange(event) {
     const { name, value } = event.target;
-    setFields(prevFields => ({
+    setFields((prevFields) => ({
       ...prevFields,
       [name]: value,
     }));
@@ -62,7 +60,6 @@ const Login = ({ ...props }) => {
   function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
-
   }
 
   return (
@@ -87,7 +84,7 @@ const Login = ({ ...props }) => {
             autoComplete="email"
             autoFocus
             helperText={errors.email}
-            error={errors.email ? true : false}
+            error={!!errors.email}
             onChange={handleChange}
           />
           <TextField
@@ -101,7 +98,7 @@ const Login = ({ ...props }) => {
             id="password"
             autoComplete="current-password"
             helperText={errors.password}
-            error={errors.password ? true : false}
+            error={!!errors.password}
             onChange={handleChange}
           />
           <Button
@@ -114,7 +111,7 @@ const Login = ({ ...props }) => {
             disabled={loading || !fields.email || !fields.password}
           >
             Sign In
-							{loading && <CircularProgress size={30} className={classes.progess} />}
+            {loading && <CircularProgress size={30} className={classes.progess} />}
           </Button>
           <Grid container>
             <Grid item>
