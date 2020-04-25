@@ -1,5 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from "prop-types";
 import withStyles from '@material-ui/core/styles/withStyles';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 
 const styles = (theme) => ({
   paper: {
@@ -29,10 +40,100 @@ const styles = (theme) => ({
   }
 });
 
-const Login = () => (
-  <div>
-    Login form
-  </div>
-);
+
+
+const Login = ({ ...props }) => {
+  const { classes } = props;
+
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [fields, setFields] = useState({});
+
+
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFields(prevFields => ({
+      ...prevFields,
+      [name]: value,
+    }));
+  }
+
+  function handleSubmit(event) {
+
+  }
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            helperText={errors.email}
+            error={errors.email ? true : false}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            helperText={errors.password}
+            error={errors.password ? true : false}
+            onChange={handleChange}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleSubmit}
+            disabled={loading || !fields.email || !fields.password}
+          >
+            Sign In
+							{loading && <CircularProgress size={30} className={classes.progess} />}
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Link href="signup" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+          {errors.general && (
+            <Typography variant="body2" className={classes.customError}>
+              {errors.general}
+            </Typography>
+          )}
+        </form>
+      </div>
+    </Container>
+  );
+};
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(Login);
