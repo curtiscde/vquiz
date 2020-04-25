@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js --port 3000",
+    "start:mockApi": "node tools/mockApiServer.js",
     "lint": "eslint .",
     "clean:build": "rimraf ./build && mkdir build",
     "prebuild": "npm run clean:build",
@@ -45,6 +46,7 @@
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.11.2",
     "eslint": "5.15.2",
+    "eslint-config-airbnb-base": "^14.1.0",
     "eslint-loader": "2.1.2",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-react": "7.12.4",

@@ -10,9 +10,9 @@ const theme = createMuiTheme({
       light: '#33c9dc',
       main: '#FF5722',
       dark: '#d50000',
-      contrastText: '#fff'
-    }
-  }
+      contrastText: '#fff',
+    },
+  },
 });
 
 function App() {
@@ -28,4 +28,5 @@ function App() {
     </MuiThemeProvider>
   );
 }
+
 export default App;
