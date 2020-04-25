@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js --port 3000",
+    "start:mockApi": "node tools/mockApiServer.js",
     "lint": "eslint .",
     "clean:build": "rimraf ./build && mkdir build",
     "prebuild": "npm run clean:build",
