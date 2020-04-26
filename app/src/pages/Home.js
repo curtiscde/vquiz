@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawerHeader: {
-    ...theme.mixins.toolbar,
+    [theme.breakpoints.up('sm')]: {
+      ...theme.mixins.toolbar,
+    },
   },
   drawerPaper: {
     width: drawerWidth,
