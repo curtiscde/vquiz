@@ -78,7 +78,6 @@ const Login = ({
       .catch((resErrors) => {
         setLoading(false);
         setErrors(resErrors);
-        console.log('errors', errors);
       });
   }
 
