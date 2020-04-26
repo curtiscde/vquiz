@@ -16,7 +16,10 @@ export function login(fields) {
   return (dispatch) => (
     userApi
       .login(fields)
-      .then(({ token }) => dispatch(loginSuccess(token)))
+      .then(({ token }) => {
+        localStorage.setItem('accessToken', token);
+        dispatch(loginSuccess(token));
+      })
       .catch((errors) => dispatch(loginFailure(errors)))
   );
 }
