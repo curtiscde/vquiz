@@ -11,7 +11,20 @@ const loginFailure = (errors) => ({
   errors,
 });
 
-// eslint-disable-next-line import/prefer-default-export
+const logoutSuccess = () => ({
+  type: types.LOGOUT_SUCCESS,
+});
+
+const loadUserSuccess = (profile) => ({
+  type: types.LOAD_USER_SUCCESS,
+  profile,
+});
+
+const loadUserFailure = (profile) => ({
+  type: types.LOAD_USER_FAILURE,
+  profile,
+});
+
 export function login(fields) {
   return (dispatch) => (
     userApi
@@ -21,5 +34,31 @@ export function login(fields) {
         dispatch(loginSuccess(token));
       })
       .catch((errors) => dispatch(loginFailure(errors)))
+  );
+}
+
+export function logout() {
+  return (dispatch) => {
+    localStorage.removeItem('accessToken');
+    dispatch(logoutSuccess());
+  };
+}
+
+export function checkAuthentication() {
+  return (dispatch) => {
+    const accessToken = localStorage.getItem('accessToken');
+    console.log('accessToken', accessToken);
+    if (accessToken) {
+      dispatch(loginSuccess(accessToken));
+    }
+  };
+}
+
+export function loadUser(accessToken) {
+  return (dispatch) => (
+    userApi
+      .getUser(accessToken)
+      .then((profile) => dispatch(loadUserSuccess(profile)))
+      .catch((errors) => dispatch(loadUserFailure(errors)))
   );
 }
