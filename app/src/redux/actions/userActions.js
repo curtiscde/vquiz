@@ -47,7 +47,6 @@ export function logout() {
 export function checkAuthentication() {
   return (dispatch) => {
     const accessToken = localStorage.getItem('accessToken');
-    console.log('accessToken', accessToken);
     if (accessToken) {
       dispatch(loginSuccess(accessToken));
     }

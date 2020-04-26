@@ -15,6 +15,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import List from '@material-ui/core/List';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import * as userActions from '../redux/actions/userActions';
 
@@ -67,6 +70,7 @@ const Home = ({
   const { classes } = props;
 
   const [uiLoading, setUiLoading] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (!user.isAuthenticated) {
@@ -77,6 +81,14 @@ const Home = ({
       setUiLoading(false);
     }
   }, [user.isAuthenticated]);
+
+  function handleDrawerOpen() {
+    setDrawerOpen(true);
+  }
+
+  function handleDrawerClose() {
+    setDrawerOpen(false);
+  }
 
   function handleLogout() {
     logout();
@@ -96,6 +108,9 @@ const Home = ({
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+          <IconButton onClick={handleDrawerOpen}>
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h6" noWrap>
             vquiz
           </Typography>
@@ -103,12 +118,16 @@ const Home = ({
       </AppBar>
       <Drawer
         className={classes.drawer}
-        variant="permanent"
+        open={drawerOpen}
         classes={{
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.toolbar} />
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
         <Divider />
         <center>
           <p>
@@ -127,8 +146,6 @@ const Home = ({
           </ListItem>
         </List>
       </Drawer>
-
-      <div>Home</div>
     </div>
   );
 };
