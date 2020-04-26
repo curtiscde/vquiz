@@ -32,10 +32,13 @@ function validateLogin(fields) {
 }
 
 server.post('/login', (req, res) => {
-  console.log(req.body);
   const { errors, valid } = validateLogin(req.body);
   if (!valid) {
     res.status(400).send(errors);
+  } else if (req.body.email === 'n' && req.body.password === 'n') {
+    res.status(403).send({
+      info: 'Incorrect credentials',
+    });
   } else {
     res.json({
       token: 'token',
