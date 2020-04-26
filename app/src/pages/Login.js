@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Container from '@material-ui/core/Container';
@@ -11,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import { login } from '../redux/actions/userActions';
 
 const styles = (theme) => ({
   paper: {
@@ -40,14 +42,23 @@ const styles = (theme) => ({
   },
 });
 
-
-const Login = ({ ...props }) => {
+const Login = ({
+  user,
+  userLogin,
+  history,
+  ...props
+}) => {
   const { classes } = props;
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
 
+  useEffect(() => {
+    if (user.isAuthenticated) {
+      history.push('/');
+    }
+  }, [user.isAuthenticated]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -60,6 +71,14 @@ const Login = ({ ...props }) => {
   function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
+    userLogin(fields)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((resErrors) => {
+        setLoading(false);
+        setErrors(resErrors);
+      });
   }
 
   return (
@@ -132,7 +151,19 @@ const Login = ({ ...props }) => {
 };
 
 Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  userLogin: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = (state) => ({ user: state.user });
+
+const mapDispatchToProps = {
+  userLogin: login,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(Login));
