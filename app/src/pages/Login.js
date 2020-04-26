@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -42,14 +42,23 @@ const styles = (theme) => ({
   },
 });
 
-
-const Login = ({ userLogin, history, ...props }) => {
+const Login = ({
+  user,
+  userLogin,
+  history,
+  ...props
+}) => {
   const { classes } = props;
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
 
+  useEffect(() => {
+    if (user.isAuthenticated) {
+      history.push('/');
+    }
+  }, [user.isAuthenticated]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -65,11 +74,11 @@ const Login = ({ userLogin, history, ...props }) => {
     userLogin(fields)
       .then(() => {
         setLoading(false);
-        history.push('/');
       })
       .catch((resErrors) => {
         setLoading(false);
         setErrors(resErrors);
+        console.log('errors', errors);
       });
   }
 
@@ -143,16 +152,19 @@ const Login = ({ userLogin, history, ...props }) => {
 };
 
 Login.propTypes = {
+  user: PropTypes.object.isRequired,
   userLogin: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
+
+const mapStateToProps = (state) => ({ user: state.user });
 
 const mapDispatchToProps = {
   userLogin: login,
 };
 
 export default connect(
-  () => ({}),
+  mapStateToProps,
   mapDispatchToProps,
 )(withStyles(styles)(Login));
