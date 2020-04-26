@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -26,9 +25,6 @@ import * as userActions from '../redux/actions/userActions';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
   appBar: {
     [theme.breakpoints.up('sm')]: {
       zIndex: theme.zIndex.drawer + 1,
@@ -133,8 +129,7 @@ const Home = ({
   }
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
+    <div>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton onClick={handleDrawerOpen} className={classes.menuButton}>
