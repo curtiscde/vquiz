@@ -10,7 +10,7 @@ import {
   editQuiz,
   deleteQuiz,
 } from './APIs/quiz';
-import { loginUser, signUpUser } from './APIs/user';
+import { loginUser, signUpUser, getUser } from './APIs/user';
 
 const functions = require('firebase-functions');
 
@@ -30,5 +30,6 @@ app.delete('/quiz/:quizId', auth, deleteQuiz);
 
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);
+app.get('/user', auth, getUser);
 
 exports.api = functions.region('europe-west1').https.onRequest(app);
