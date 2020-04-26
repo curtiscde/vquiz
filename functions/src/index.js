@@ -20,7 +20,7 @@ firebase.initializeApp(config.firebase);
 
 app.use(cors({
   origin: 'http://localhost:3000',
-}))
+}));
 
 app.get('/quizzes', auth, getAllQuizzes);
 app.get('/quiz/:quizId', auth, getQuiz);
