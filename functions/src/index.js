@@ -1,5 +1,6 @@
 import express from 'express';
 import firebase from 'firebase';
+import cors from 'cors';
 import auth from './util/auth';
 import config from './util/config';
 import {
@@ -16,6 +17,10 @@ const functions = require('firebase-functions');
 const app = express();
 
 firebase.initializeApp(config.firebase);
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}))
 
 app.get('/quizzes', auth, getAllQuizzes);
 app.get('/quiz/:quizId', auth, getQuiz);
