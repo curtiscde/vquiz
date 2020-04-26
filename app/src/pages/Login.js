@@ -43,7 +43,7 @@ const styles = (theme) => ({
 });
 
 
-const Login = ({ userLogin, ...props }) => {
+const Login = ({ userLogin, history, ...props }) => {
   const { classes } = props;
 
   const [errors, setErrors] = useState({});
@@ -65,6 +65,7 @@ const Login = ({ userLogin, ...props }) => {
     userLogin(fields)
       .then(() => {
         setLoading(false);
+        history.push('/');
       })
       .catch((resErrors) => {
         setLoading(false);
@@ -143,6 +144,7 @@ const Login = ({ userLogin, ...props }) => {
 
 Login.propTypes = {
   userLogin: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
