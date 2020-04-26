@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core/styles';
+import withWidth from '@material-ui/core/withWidth';
+
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -23,23 +25,41 @@ import * as userActions from '../redux/actions/userActions';
 
 const drawerWidth = 240;
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    [theme.breakpoints.up('sm')]: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
   },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  drawerHeader: {
+    ...theme.mixins.toolbar,
   },
   drawerPaper: {
     width: drawerWidth,
   },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  drawerCloseButton: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
   avatar: {
     height: 110,
@@ -57,7 +77,7 @@ const styles = (theme) => ({
     top: '35%',
   },
   toolbar: theme.mixins.toolbar,
-});
+}));
 
 const Home = ({
   checkAuthentication,
@@ -67,10 +87,13 @@ const Home = ({
   history,
   ...props
 }) => {
-  const { classes } = props;
+  const { width } = props;
+
+  const classes = useStyles();
 
   const [uiLoading, setUiLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isPermanentDrawer, setIsPermanentDrawer] = useState(false);
 
   useEffect(() => {
     if (!user.isAuthenticated) {
@@ -81,6 +104,10 @@ const Home = ({
       setUiLoading(false);
     }
   }, [user.isAuthenticated]);
+
+  useEffect(() => {
+    setIsPermanentDrawer(width !== 'xs');
+  }, [width]);
 
   function handleDrawerOpen() {
     setDrawerOpen(true);
@@ -108,7 +135,7 @@ const Home = ({
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton onClick={handleDrawerOpen}>
+          <IconButton onClick={handleDrawerOpen} className={classes.menuButton}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
@@ -119,12 +146,13 @@ const Home = ({
       <Drawer
         className={classes.drawer}
         open={drawerOpen}
+        variant={isPermanentDrawer ? 'permanent' : null}
         classes={{
           paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} className={classes.drawerCloseButton}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -156,7 +184,7 @@ Home.propTypes = {
   loadUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
+  width: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({ user: state.user });
@@ -170,4 +198,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(Home));
+)(withWidth()(Home));
