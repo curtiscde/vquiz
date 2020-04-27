@@ -15,6 +15,18 @@ export default function userReducer(state = initialState.user, action) {
         token: null,
         isAuthenticated: false,
       };
+    case types.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        profile: {},
+      };
+    case types.LOAD_USER_SUCCESS:
+      return {
+        ...state,
+        profile: action.profile,
+      };
     default:
       return state;
   }

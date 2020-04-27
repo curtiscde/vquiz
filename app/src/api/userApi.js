@@ -12,3 +12,11 @@ export function login(fields) {
     .then(handleResponse)
     .catch(handleError);
 }
+
+export function getUser(accessToken) {
+  return fetch(`${baseUrl}/user`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
