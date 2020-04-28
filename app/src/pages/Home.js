@@ -13,27 +13,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import * as userActions from '../redux/actions/userActions';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   appBar: {
     [theme.breakpoints.up('sm')]: {
       zIndex: theme.zIndex.drawer + 1,
     },
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  drawerHeader: {
-    [theme.breakpoints.up('sm')]: {
-      ...theme.mixins.toolbar,
-    },
-  },
-  drawerPaper: {
-    width: drawerWidth,
   },
   menuButton: {
     marginRight: theme.spacing(2),
