@@ -54,8 +54,8 @@ function App({
             user
             && user.isAuthenticated
             && <>
-              <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
               <Header onOpenSideBar={handleOpenSideBar} />
+              <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
             </>
           }
           <Switch>

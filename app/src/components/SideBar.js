@@ -63,14 +63,14 @@ const SideBar = ({
         paper: classes.drawerPaper,
       }}
     >
-      {
-        !isPermanentDrawer
-        && <div className={classes.drawerHeader}>
-          <IconButton onClick={onCloseSideBar} className={classes.drawerCloseButton}>
+      <div className={classes.drawerHeader}>
+        {
+          !isPermanentDrawer
+          && <IconButton onClick={onCloseSideBar} className={classes.drawerCloseButton}>
             <ChevronLeftIcon />
           </IconButton>
-        </div>
-      }
+        }
+      </div>
       <Divider />
       <center>
         <p>

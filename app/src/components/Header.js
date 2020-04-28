@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     [theme.breakpoints.up('sm')]: {
       zIndex: theme.zIndex.drawer + 1,
+      position: 'fixed',
     },
   },
   menuButton: {
@@ -28,7 +29,7 @@ const Header = ({
   const classes = useStyles();
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar className={classes.appBar}>
       <Toolbar>
         <IconButton onClick={onOpenSideBar} className={classes.menuButton}>
           <MenuIcon />
