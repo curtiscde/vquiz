@@ -20,7 +20,6 @@ const useStyles = makeStyles(() => ({
 
 const Home = ({
   checkAuthentication,
-  loadUser,
   user,
   history,
 }) => {
@@ -33,10 +32,9 @@ const Home = ({
       checkAuthentication();
       history.push('/login');
     } else {
-      loadUser(user.token);
       setUiLoading(false);
     }
-  }, [user.isAuthenticated]);
+  }, [user.isAuthenticated, user.profile]);
 
   if (uiLoading) {
     return (
@@ -54,7 +52,6 @@ const Home = ({
 
 Home.propTypes = {
   checkAuthentication: PropTypes.func.isRequired,
-  loadUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
@@ -63,7 +60,6 @@ const mapStateToProps = (state) => ({ user: state.user });
 
 const mapDispatchToProps = {
   checkAuthentication: userActions.checkAuthentication,
-  loadUser: userActions.loadUser,
 };
 
 export default connect(
