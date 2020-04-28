@@ -15,6 +15,10 @@ const logoutSuccess = () => ({
   type: types.LOGOUT_SUCCESS,
 });
 
+const loadUserPending = () => ({
+  type: types.LOAD_USER_PENDING,
+});
+
 const loadUserSuccess = (profile) => ({
   type: types.LOAD_USER_SUCCESS,
   profile,
@@ -54,10 +58,11 @@ export function checkAuthentication() {
 }
 
 export function loadUser(accessToken) {
-  return (dispatch) => (
-    userApi
+  return (dispatch) => {
+    dispatch(loadUserPending());
+    return userApi
       .getUser(accessToken)
       .then((profile) => dispatch(loadUserSuccess(profile)))
-      .catch((errors) => dispatch(loadUserFailure(errors)))
-  );
+      .catch((errors) => dispatch(loadUserFailure(errors)));
+  };
 }
