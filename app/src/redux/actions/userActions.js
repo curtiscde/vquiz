@@ -1,6 +1,20 @@
 import * as types from './actionTypes';
 import * as userApi from '../../api/userApi';
 
+const loadUserPending = () => ({
+  type: types.LOAD_USER_PENDING,
+});
+
+const loadUserSuccess = (profile) => ({
+  type: types.LOAD_USER_SUCCESS,
+  profile,
+});
+
+const loadUserFailure = (profile) => ({
+  type: types.LOAD_USER_FAILURE,
+  profile,
+});
+
 const loginSuccess = (token) => ({
   type: types.LOGIN_SUCCESS,
   token,
@@ -15,15 +29,15 @@ const logoutSuccess = () => ({
   type: types.LOGOUT_SUCCESS,
 });
 
-const loadUserSuccess = (profile) => ({
-  type: types.LOAD_USER_SUCCESS,
-  profile,
-});
-
-const loadUserFailure = (profile) => ({
-  type: types.LOAD_USER_FAILURE,
-  profile,
-});
+export function loadUser(accessToken) {
+  return (dispatch) => {
+    dispatch(loadUserPending());
+    return userApi
+      .getUser(accessToken)
+      .then((profile) => dispatch(loadUserSuccess(profile)))
+      .catch((errors) => dispatch(loadUserFailure(errors)));
+  };
+}
 
 export function login(fields) {
   return (dispatch) => (
@@ -32,6 +46,7 @@ export function login(fields) {
       .then(({ token }) => {
         localStorage.setItem('accessToken', token);
         dispatch(loginSuccess(token));
+        dispatch(loadUser(token));
       })
       .catch((errors) => dispatch(loginFailure(errors)))
   );
@@ -49,15 +64,7 @@ export function checkAuthentication() {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       dispatch(loginSuccess(accessToken));
+      dispatch(loadUser(accessToken));
     }
   };
-}
-
-export function loadUser(accessToken) {
-  return (dispatch) => (
-    userApi
-      .getUser(accessToken)
-      .then((profile) => dispatch(loadUserSuccess(profile)))
-      .catch((errors) => dispatch(loadUserFailure(errors)))
-  );
 }

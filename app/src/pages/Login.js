@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,7 +14,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { login } from '../redux/actions/userActions';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -39,25 +40,16 @@ const styles = (theme) => ({
   progess: {
     position: 'absolute',
   },
-});
+}));
 
 const Login = ({
-  user,
   userLogin,
-  history,
-  ...props
 }) => {
-  const { classes } = props;
+  const classes = useStyles();
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
-
-  useEffect(() => {
-    if (user.isAuthenticated) {
-      history.push('/');
-    }
-  }, [user.isAuthenticated]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -149,10 +141,7 @@ const Login = ({
 };
 
 Login.propTypes = {
-  user: PropTypes.object.isRequired,
   userLogin: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({ user: state.user });
@@ -164,4 +153,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(Login));
+)(Login);

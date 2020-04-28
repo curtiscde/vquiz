@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import * as userActions from './redux/actions/userActions';
+
+import SideBar from './components/SideBar';
+import Header from './components/Header';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -24,22 +32,60 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function App() {
+function App({
+  user,
+  checkAuthentication,
+}) {
   const classes = useStyles();
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+
+  useEffect(() => {
+    if (!user.isAuthenticated) {
+      checkAuthentication();
+    }
+  }, [user.isAuthenticated]);
+
+  const handleCloseSideBar = () => {
+    setSideBarOpen(false);
+  };
+
+  const handleOpenSideBar = () => {
+    setSideBarOpen(true);
+  };
 
   return (
     <MuiThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <div className={classes.root}>
+          <CssBaseline />
+          {
+            user
+              && user.isAuthenticated
+              ? <>
+                <Header onOpenSideBar={handleOpenSideBar} />
+                <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                </Switch>
+              </>
+              : <Login />
+          }
+        </div>
+      </Router>
     </MuiThemeProvider>
   );
 }
 
-export default App;
+App.propTypes = {
+  user: PropTypes.object.isRequired,
+  checkAuthentication: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  checkAuthentication: userActions.checkAuthentication,
+};
+
+export default connect(
+  (state) => ({ user: state.user }),
+  mapDispatchToProps,
+)(App);

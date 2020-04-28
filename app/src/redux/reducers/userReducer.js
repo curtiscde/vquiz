@@ -22,9 +22,15 @@ export default function userReducer(state = initialState.user, action) {
         isAuthenticated: false,
         profile: {},
       };
+    case types.LOAD_USER_PENDING:
+      return {
+        ...state,
+        fetchingProfile: true,
+      };
     case types.LOAD_USER_SUCCESS:
       return {
         ...state,
+        fetchingProfile: false,
         profile: action.profile,
       };
     default:
