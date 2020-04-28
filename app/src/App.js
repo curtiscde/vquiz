@@ -8,6 +8,7 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import SideBar from './components/SideBar';
+import Header from './components/Header';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -40,6 +41,10 @@ function App({
     setSideBarOpen(false);
   };
 
+  const handleOpenSideBar = () => {
+    setSideBarOpen(true);
+  };
+
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
@@ -48,7 +53,10 @@ function App({
           {
             user
             && user.isAuthenticated
-            && <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
+            && <>
+              <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
+              <Header onOpenSideBar={handleOpenSideBar} />
+            </>
           }
           <Switch>
             <Route exact path="/" component={Home} />
