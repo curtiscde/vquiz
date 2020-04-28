@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { ThemeProvider as MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import deepPurple from '@material-ui/core/colors/deepPurple';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import * as userActions from './redux/actions/userActions';
@@ -17,12 +19,7 @@ import Login from './pages/Login';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      light: '#33c9dc',
-      main: '#FF5722',
-      dark: '#d50000',
-      contrastText: '#fff',
-    },
+    primary: deepPurple,
   },
 });
 
