@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import user from './userReducer';
-import quiz from './quizReducer';
+import quizzes from './quizReducer';
 
 const rootReducer = combineReducers({
   user,
-  quiz,
+  quizzes,
 });
 
 export default rootReducer;
