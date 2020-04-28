@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
 
 import * as quizActions from '../redux/actions/quizActions';
+
+import QuizzesList from '../components/QuizzesList';
 
 const useStyles = makeStyles(() => ({
   uiProgess: {
@@ -36,9 +37,7 @@ const Home = ({ quizzesFetching, quizzes, loadQuizzes }) => {
 
   return (
     <>
-      {quizzes.map((quiz) => (
-        <Paper key={quiz.quizId} variant="outlined">{quiz.title}</Paper>
-      ))}
+      <QuizzesList quizzes={quizzes} />
     </>
   );
 };
