@@ -8,6 +8,18 @@ export default function quizReducer(state = initialState.quizzes, action) {
         ...state,
         fetching: true,
       };
+    case types.FETCH_QUIZZES_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        data: action.quizzes,
+      };
+    case types.FETCH_QUIZZES_FAILURE:
+      return {
+        ...state,
+        fetching: false,
+      };
     default:
       return state;
   }

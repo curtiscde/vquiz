@@ -7,6 +7,7 @@ export default {
   },
   quizzes: {
     fetching: false,
+    fetched: false,
     data: [],
   },
 };
