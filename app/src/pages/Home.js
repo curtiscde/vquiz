@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from '@material-ui/core/Paper';
 
 import * as quizActions from '../redux/actions/quizActions';
 
@@ -18,14 +19,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Home = ({ quizzes, loadQuizzes }) => {
+const Home = ({ quizzesFetching, quizzes, loadQuizzes }) => {
   const classes = useStyles();
 
   useEffect(() => {
     loadQuizzes();
   }, []);
 
-  if (quizzes.fetching) {
+  if (quizzesFetching) {
     return (
       <div className={classes.root}>
         <CircularProgress size={150} className={classes.uiProgess} />
@@ -35,17 +36,22 @@ const Home = ({ quizzes, loadQuizzes }) => {
 
   return (
     <>
+      {quizzes.map((quiz) => (
+        <Paper key={quiz.quizId} variant="outlined">{quiz.title}</Paper>
+      ))}
     </>
   );
 };
 
 Home.propTypes = {
-  quizzes: PropTypes.object.isRequired,
+  quizzesFetching: PropTypes.bool.isRequired,
+  quizzes: PropTypes.array.isRequired,
   loadQuizzes: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  quizzes: state.quizzes,
+  quizzesFetching: state.quizzes.fetching,
+  quizzes: state.quizzes.data,
 });
 
 const mapDispatchToProps = {

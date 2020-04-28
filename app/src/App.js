@@ -27,6 +27,11 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
   },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
 }));
 
 function App({
@@ -61,9 +66,12 @@ function App({
               ? <>
                 <Header onOpenSideBar={handleOpenSideBar} />
                 <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                </Switch>
+                <main className={classes.content}>
+                  <div className={classes.toolbar} />
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                  </Switch>
+                </main>
               </>
               : <Login />
           }
