@@ -35,11 +35,7 @@ const Home = () => {
   );
 };
 
-Home.propTypes = {
-  checkAuthentication: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
+Home.propTypes = {};
 
 const mapStateToProps = () => ({});
 

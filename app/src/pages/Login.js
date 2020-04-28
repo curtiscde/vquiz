@@ -53,12 +53,6 @@ const Login = ({
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
 
-  useEffect(() => {
-    if (user.isAuthenticated) {
-      history.push('/');
-    }
-  }, [user.isAuthenticated]);
-
   function handleChange(event) {
     const { name, value } = event.target;
     setFields((prevFields) => ({
