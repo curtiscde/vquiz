@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import SideBar from './components/SideBar';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -24,22 +29,41 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function App() {
+function App({
+  user,
+}) {
   const classes = useStyles();
+
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+
+  const handleCloseSideBar = () => {
+    setSideBarOpen(false);
+  };
 
   return (
     <MuiThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Router>
+      <Router>
+        <div className={classes.root}>
+          <CssBaseline />
+          {
+            user
+            && user.isAuthenticated
+            && <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
+          }
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
           </Switch>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </MuiThemeProvider>
   );
 }
 
-export default App;
+App.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => ({ user: state.user }),
+)(App);
