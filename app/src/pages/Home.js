@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import * as userActions from '../redux/actions/userActions';
 
 const useStyles = makeStyles(() => ({
   uiProgess: {
@@ -18,23 +16,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Home = ({
-  checkAuthentication,
-  user,
-  history,
-}) => {
+const Home = () => {
   const classes = useStyles();
 
-  const [uiLoading, setUiLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user.isAuthenticated) {
-      checkAuthentication();
-      history.push('/login');
-    } else {
-      setUiLoading(false);
-    }
-  }, [user.isAuthenticated, user.profile]);
+  const [uiLoading, setUiLoading] = useState(false);
 
   if (uiLoading) {
     return (
@@ -56,11 +41,9 @@ Home.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {
-  checkAuthentication: userActions.checkAuthentication,
-};
+const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
