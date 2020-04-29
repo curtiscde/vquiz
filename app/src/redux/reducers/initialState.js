@@ -5,4 +5,9 @@ export default {
     fetchingProfile: false,
     profile: {},
   },
+  quizzes: {
+    fetching: false,
+    fetched: false,
+    data: [],
+  },
 };

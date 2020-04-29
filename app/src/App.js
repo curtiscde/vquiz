@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { ThemeProvider as MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import deepPurple from '@material-ui/core/colors/deepPurple';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import * as userActions from './redux/actions/userActions';
@@ -14,21 +16,22 @@ import Header from './components/Header';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
+import QuizCreate from './pages/QuizCreate';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      light: '#33c9dc',
-      main: '#FF5722',
-      dark: '#d50000',
-      contrastText: '#fff',
-    },
+    primary: deepPurple,
   },
 });
 
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
   },
 }));
 
@@ -64,9 +67,13 @@ function App({
               ? <>
                 <Header onOpenSideBar={handleOpenSideBar} />
                 <SideBar sideBarOpen={sideBarOpen} onCloseSideBar={handleCloseSideBar} />
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                </Switch>
+                <main className={classes.content}>
+                  <div className={classes.toolbar} />
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/newquiz" component={QuizCreate} />
+                  </Switch>
+                </main>
               </>
               : <Login />
           }

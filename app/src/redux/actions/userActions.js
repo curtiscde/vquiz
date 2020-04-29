@@ -45,6 +45,7 @@ export function login(fields) {
       .login(fields)
       .then(({ token }) => {
         localStorage.setItem('accessToken', token);
+        localStorage.setItem('authExpiry', new Date().getTime() + (60 * 60 * 1000));
         dispatch(loginSuccess(token));
         dispatch(loadUser(token));
       })
@@ -55,6 +56,7 @@ export function login(fields) {
 export function logout() {
   return (dispatch) => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('authExpiry');
     dispatch(logoutSuccess());
   };
 }
@@ -62,7 +64,9 @@ export function logout() {
 export function checkAuthentication() {
   return (dispatch) => {
     const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
+    const authExpiry = localStorage.getItem('authExpiry');
+    console.log('authExpiry', authExpiry);
+    if (accessToken && parseInt(authExpiry, 10) > (new Date().getTime())) {
       dispatch(loginSuccess(accessToken));
       dispatch(loadUser(accessToken));
     }
