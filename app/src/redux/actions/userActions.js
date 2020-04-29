@@ -65,7 +65,6 @@ export function checkAuthentication() {
   return (dispatch) => {
     const accessToken = localStorage.getItem('accessToken');
     const authExpiry = localStorage.getItem('authExpiry');
-    console.log('authExpiry', authExpiry);
     if (accessToken && parseInt(authExpiry, 10) > (new Date().getTime())) {
       dispatch(loginSuccess(accessToken));
       dispatch(loadUser(accessToken));

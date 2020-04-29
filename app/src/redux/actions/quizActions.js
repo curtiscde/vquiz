@@ -1,31 +1,23 @@
 import * as types from './actionTypes';
 import * as quizApi from '../../api/quizApi';
+import { loadQuizzes } from './quizzesActions';
 
-const loadQuizzesPending = () => ({
-  type: types.FETCH_QUIZZES_PENDING,
+const loadQuizPending = (quizId) => ({
+  type: types.FETCH_QUIZ_PENDING,
+  quizId,
 });
 
-const loadQuizzesSuccess = (quizzes) => ({
-  type: types.FETCH_QUIZZES_SUCCESS,
-  quizzes,
+const loadQuizSuccess = (quiz) => ({
+  type: types.FETCH_QUIZ_SUCCESS,
+  quiz,
 });
 
-const loadQuizzesFailure = (errors) => ({
-  type: types.FETCH_QUIZZES_FAILURE,
+const loadQuizFailure = (errors) => ({
+  type: types.FETCH_QUIZ_FAILURE,
   errors,
 });
 
-
-export function loadQuizzes() {
-  return (dispatch) => {
-    dispatch(loadQuizzesPending());
-    return quizApi
-      .getQuizzes()
-      .then((quizzes) => dispatch(loadQuizzesSuccess(quizzes)))
-      .catch((errors) => dispatch(loadQuizzesFailure(errors)));
-  };
-}
-
+// eslint-disable-next-line import/prefer-default-export
 export function createQuiz(quiz) {
   return (dispatch) => (
     quizApi
@@ -35,4 +27,14 @@ export function createQuiz(quiz) {
         return data.quizId;
       })
   );
+}
+
+export function loadQuiz(quizId) {
+  return (dispatch) => {
+    dispatch(loadQuizPending(quizId));
+    return quizApi
+      .getQuiz(quizId)
+      .then((quiz) => dispatch(loadQuizSuccess(quiz)))
+      .catch((errors) => dispatch(loadQuizFailure(errors)));
+  };
 }
