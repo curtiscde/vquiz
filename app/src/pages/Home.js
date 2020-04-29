@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 26,
   },
   addQuizFab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
