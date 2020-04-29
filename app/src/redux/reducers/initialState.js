@@ -10,4 +10,5 @@ export default {
     fetched: false,
     data: [],
   },
+  quiz: {},
 };

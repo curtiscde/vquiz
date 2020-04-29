@@ -1,24 +1,27 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-export default function quizReducer(state = initialState.quizzes, action) {
+export default function quizReducer(state = initialState.quiz, action) {
   switch (action.type) {
-    case types.FETCH_QUIZZES_PENDING:
+    case types.CREATE_QUIZ_PENDING:
       return {
         ...state,
         fetching: true,
       };
-    case types.FETCH_QUIZZES_SUCCESS:
+    case types.FETCH_QUIZ_PENDING:
       return {
         ...state,
-        fetching: false,
-        fetched: true,
-        data: action.quizzes,
+        [action.quizId]: {
+          fetching: true,
+        },
       };
-    case types.FETCH_QUIZZES_FAILURE:
+    case types.FETCH_QUIZ_SUCCESS:
       return {
         ...state,
-        fetching: false,
+        [action.quiz.id]: {
+          fetching: false,
+          data: action.quiz,
+        },
       };
     default:
       return state;

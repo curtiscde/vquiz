@@ -22,3 +22,11 @@ export function createQuiz(quiz) {
     .then(handleResponse)
     .catch(handleError);
 }
+
+export function getQuiz(quizId) {
+  return fetch(`${baseUrl}/quiz/${quizId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}

@@ -8,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 
-import * as quizActions from '../redux/actions/quizActions';
+import * as quizzesActions from '../redux/actions/quizzesActions';
 
 import QuizzesList from '../components/QuizzesList';
 
@@ -79,7 +79,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  loadQuizzes: quizActions.loadQuizzes,
+  loadQuizzes: quizzesActions.loadQuizzes,
 };
 
 export default connect(
