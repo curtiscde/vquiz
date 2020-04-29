@@ -16,6 +16,7 @@ import Header from './components/Header';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
+import QuizCreate from './pages/QuizCreate';
 
 const theme = createMuiTheme({
   palette: {
@@ -70,6 +71,7 @@ function App({
                   <div className={classes.toolbar} />
                   <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/newquiz" component={QuizCreate} />
                   </Switch>
                 </main>
               </>

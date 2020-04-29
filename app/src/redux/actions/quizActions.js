@@ -15,7 +15,7 @@ const loadQuizzesFailure = (errors) => ({
   errors,
 });
 
-// eslint-disable-next-line import/prefer-default-export
+
 export function loadQuizzes() {
   return (dispatch) => {
     dispatch(loadQuizzesPending());
@@ -24,4 +24,15 @@ export function loadQuizzes() {
       .then((quizzes) => dispatch(loadQuizzesSuccess(quizzes)))
       .catch((errors) => dispatch(loadQuizzesFailure(errors)));
   };
+}
+
+export function createQuiz(quiz) {
+  return (dispatch) => (
+    quizApi
+      .createQuiz(quiz)
+      .then((data) => {
+        dispatch(loadQuizzes());
+        return data.quizId;
+      })
+  );
 }

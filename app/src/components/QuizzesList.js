@@ -6,6 +6,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
+import dayjs from 'dayjs';
+import dayJsAdvancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(dayJsAdvancedFormat);
+
 const QuizzesList = ({ quizzes }) => (
   <Grid container spacing={3}>
     {
@@ -14,6 +19,9 @@ const QuizzesList = ({ quizzes }) => (
           <Card>
             <CardContent>
               <Typography variant="h5" component="h2">{quiz.title}</Typography>
+              <Typography color="textSecondary">
+                {dayjs(quiz.date).format('Do MMMM YYYY')}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
