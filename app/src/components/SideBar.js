@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
@@ -37,6 +38,7 @@ const SideBar = ({
   onCloseSideBar,
   user,
   logout,
+  history,
   width,
 }) => {
   const classes = useStyles();
@@ -49,6 +51,11 @@ const SideBar = ({
 
   const handleLogout = () => {
     logout();
+  };
+
+  const handleRedirect = (path) => {
+    history.push(path);
+    onCloseSideBar();
   };
 
   return (
@@ -69,7 +76,7 @@ const SideBar = ({
         }
       </div>
       <Divider />
-      <SideBarContents user={user} handleLogout={handleLogout} />
+      <SideBarContents user={user} onLinkClick={handleRedirect} handleLogout={handleLogout} />
     </Drawer>
   );
 };
@@ -79,6 +86,7 @@ SideBar.propTypes = {
   onCloseSideBar: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   width: PropTypes.string.isRequired,
 };
 
@@ -89,4 +97,4 @@ const mapDispatchToProps = {
 export default connect(
   (state) => ({ user: state.user }),
   mapDispatchToProps,
-)(withWidth()(SideBar));
+)(withWidth()(withRouter(SideBar)));
