@@ -14,8 +14,8 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const SideBarContents = ({
   user,
+  onLinkClick,
   handleLogout,
-  history,
 }) => {
   if (user.fetchingProfile) {
     return (
@@ -32,14 +32,14 @@ const SideBarContents = ({
       </center>
       <Divider />
       <List>
-        <ListItem button key="ViewQuizzes" onClick={() => history.push('/')}>
+        <ListItem button key="ViewQuizzes" onClick={() => onLinkClick('/')}>
           <ListItemIcon>
             {' '}
             <FormatListBulletedIcon />{' '}
           </ListItemIcon>
           <ListItemText primary="Your Quizzes" />
         </ListItem>
-        <ListItem button key="CreateQuiz" onClick={() => history.push('/newquiz')}>
+        <ListItem button key="CreateQuiz" onClick={() => onLinkClick('/newquiz')}>
           <ListItemIcon>
             {' '}
             <AddCircleOutlineIcon />{' '}
@@ -60,6 +60,7 @@ const SideBarContents = ({
 
 SideBarContents.propTypes = {
   user: PropTypes.object.isRequired,
+  onLinkClick: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };

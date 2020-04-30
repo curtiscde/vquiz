@@ -30,3 +30,21 @@ export function getQuiz(quizId) {
     .then(handleResponse)
     .catch(handleError);
 }
+
+export function deleteQuiz(quizId) {
+  return fetch(`${baseUrl}/quiz/${quizId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    method: 'DELETE',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+export function editQuiz(quiz) {
+  return fetch(`${baseUrl}/quiz/${quiz.id}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    method: 'PUT',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}

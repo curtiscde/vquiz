@@ -8,6 +8,7 @@ import { ThemeProvider as MuiThemeProvider, makeStyles } from '@material-ui/core
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import * as userActions from './redux/actions/userActions';
 
@@ -18,6 +19,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import QuizCreate from './pages/QuizCreate';
 import Quiz from './pages/Quiz';
+import QuizEdit from './pages/QuizEdit';
 
 const theme = createMuiTheme({
   palette: {
@@ -34,10 +36,16 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  snackbar: {
+    [theme.breakpoints.down('xs')]: {
+      bottom: 90,
+    },
+  },
 }));
 
 function App({
   user,
+  snackbar,
   checkAuthentication,
 }) {
   const classes = useStyles();
@@ -74,11 +82,17 @@ function App({
                     <Route exact path="/" component={Home} />
                     <Route exact path="/newquiz" component={QuizCreate} />
                     <Route exact path="/quiz/:quizId" component={Quiz} />
+                    <Route exact path="/edit/:quizId" component={QuizEdit} />
                   </Switch>
                 </main>
               </>
               : <Login />
           }
+          <Snackbar
+            open={snackbar.open}
+            message={snackbar.message}
+            className={classes.snackbar}
+          />
         </div>
       </Router>
     </MuiThemeProvider>
@@ -87,6 +101,7 @@ function App({
 
 App.propTypes = {
   user: PropTypes.object.isRequired,
+  snackbar: PropTypes.object.isRequired,
   checkAuthentication: PropTypes.func.isRequired,
 };
 
@@ -95,6 +110,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  (state) => ({ user: state.user }),
+  (state) => ({ user: state.user, snackbar: state.ui.snackbar }),
   mapDispatchToProps,
 )(App);
