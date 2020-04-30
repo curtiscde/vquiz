@@ -24,6 +24,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.51",
     "bootstrap": "4.3.1",
     "dayjs": "^1.8.25",
     "immer": "2.1.3",

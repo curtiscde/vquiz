@@ -5,10 +5,13 @@ import { connect } from 'react-redux';
 import * as quizActions from '../redux/actions/quizActions';
 
 import QuizDashboard from '../components/QuizDashboard';
+import QuizSpeedDial from '../components/QuizSpeedDial';
 
 const Quiz = ({
   loadQuiz,
+  deleteQuiz,
   quizState,
+  history,
   ...props
 }) => {
   const { quizId } = props.match.params;
@@ -23,12 +26,34 @@ const Quiz = ({
 
   const quiz = quizState[quizId].data;
 
-  return <QuizDashboard quiz={quiz} />;
+  const handleDeleteQuiz = () => {
+    deleteQuiz(quiz.id)
+      .then(() => {
+        history.push('/');
+      });
+  };
+
+  const handleEditQuiz = () => {
+    history.push(`/edit/${quizId}`);
+  };
+
+  return (
+    <>
+      <QuizDashboard quiz={quiz} />
+      <QuizSpeedDial
+        quizTitle={quiz.title}
+        onDeleteClick={handleDeleteQuiz}
+        onEditClick={handleEditQuiz}
+      />
+    </>
+  );
 };
 
 Quiz.propTypes = {
   loadQuiz: PropTypes.func.isRequired,
+  deleteQuiz: PropTypes.func.isRequired,
   quizState: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       quizId: PropTypes.string.isRequired,
@@ -42,6 +67,7 @@ const mapDispatchToState = (state) => ({
 
 const mapDispatchToProps = {
   loadQuiz: quizActions.loadQuiz,
+  deleteQuiz: quizActions.deleteQuiz,
 };
 
 export default connect(

@@ -23,6 +23,58 @@ export default function quizReducer(state = initialState.quiz, action) {
           data: action.quiz,
         },
       };
+    case types.DELETE_QUIZ_PENDING:
+      return {
+        ...state,
+        [action.quizId]: {
+          ...state[action.quizId],
+          deleting: true,
+        },
+      };
+    case types.DELETE_QUIZ_SUCCESS:
+      return {
+        ...state,
+        [action.quizId]: {
+          ...state[action.quizId],
+          deleting: false,
+          deleted: true,
+        },
+      };
+    case types.DELETE_QUIZ_FAILURE:
+      return {
+        ...state,
+        [action.quizId]: {
+          deleting: false,
+          deleted: false,
+          deleteErrors: action.errors,
+        },
+      };
+    case types.EDIT_QUIZ_PENDING:
+      return {
+        ...state,
+        [action.quizId]: {
+          ...state[action.quizId],
+          editing: true,
+        },
+      };
+    case types.EDIT_QUIZ_SUCCESS:
+      return {
+        ...state,
+        [action.quizId]: {
+          ...state[action.quizId],
+          editing: false,
+          edited: true,
+        },
+      };
+    case types.EDIT_QUIZ_FAILURE:
+      return {
+        ...state,
+        [action.quizId]: {
+          editing: false,
+          edited: false,
+          editErrors: action.errors,
+        },
+      };
     default:
       return state;
   }

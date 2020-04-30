@@ -18,6 +18,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import QuizCreate from './pages/QuizCreate';
 import Quiz from './pages/Quiz';
+import QuizEdit from './pages/QuizEdit';
 
 const theme = createMuiTheme({
   palette: {
@@ -33,6 +34,9 @@ const useStyles = makeStyles(() => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  sb: {
+    background: 'red',
   },
 }));
 
@@ -74,6 +78,7 @@ function App({
                     <Route exact path="/" component={Home} />
                     <Route exact path="/newquiz" component={QuizCreate} />
                     <Route exact path="/quiz/:quizId" component={Quiz} />
+                    <Route exact path="/edit/:quizId" component={QuizEdit} />
                   </Switch>
                 </main>
               </>

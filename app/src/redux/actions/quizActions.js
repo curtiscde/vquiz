@@ -17,6 +17,38 @@ const loadQuizFailure = (errors) => ({
   errors,
 });
 
+const deleteQuizPending = (quizId) => ({
+  type: types.DELETE_QUIZ_PENDING,
+  quizId,
+});
+
+const deleteQuizSuccess = (quizId) => ({
+  type: types.DELETE_QUIZ_SUCCESS,
+  quizId,
+});
+
+const deleteQuizFailure = (quizId, errors) => ({
+  type: types.DELETE_QUIZ_FAILURE,
+  quizId,
+  errors,
+});
+
+const editQuizPending = (quizId) => ({
+  type: types.EDIT_QUIZ_PENDING,
+  quizId,
+});
+
+const editQuizSuccess = (quizId) => ({
+  type: types.EDIT_QUIZ_SUCCESS,
+  quizId,
+});
+
+const editQuizFailure = (quizId, errors) => ({
+  type: types.EDIT_QUIZ_FAILURE,
+  quizId,
+  errors,
+});
+
 // eslint-disable-next-line import/prefer-default-export
 export function createQuiz(quiz) {
   return (dispatch) => (
@@ -36,5 +68,25 @@ export function loadQuiz(quizId) {
       .getQuiz(quizId)
       .then((quiz) => dispatch(loadQuizSuccess(quiz)))
       .catch((errors) => dispatch(loadQuizFailure(errors)));
+  };
+}
+
+export function deleteQuiz(quizId) {
+  return (dispatch) => {
+    dispatch(deleteQuizPending(quizId));
+    return quizApi
+      .deleteQuiz(quizId)
+      .then(() => dispatch(deleteQuizSuccess(quizId)))
+      .catch((errors) => dispatch(deleteQuizFailure(quizId, errors)));
+  };
+}
+
+export function editQuiz(quiz) {
+  return (dispatch) => {
+    dispatch(editQuizPending(quiz.id));
+    return quizApi
+      .editQuiz(quiz)
+      .then((q) => dispatch(editQuizSuccess(q)))
+      .catch((errors) => dispatch(editQuizFailure(quiz.id, errors)));
   };
 }
