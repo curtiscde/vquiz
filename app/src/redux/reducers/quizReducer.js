@@ -35,7 +35,6 @@ export default function quizReducer(state = initialState.quiz, action) {
       return {
         ...state,
         [action.quizId]: {
-          ...state[action.quizId],
           deleting: false,
           deleted: true,
         },

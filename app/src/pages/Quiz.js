@@ -23,6 +23,9 @@ const Quiz = ({
   if (!quizState[quizId] || quizState[quizId].fetching) {
     return <>Loading</>;
   }
+  if (quizState[quizId].deleted) {
+    return <>Deleted</>;
+  }
 
   const quiz = quizState[quizId].data;
 
