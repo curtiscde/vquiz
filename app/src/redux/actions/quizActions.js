@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import * as quizApi from '../../api/quizApi';
 import { loadQuizzes } from './quizzesActions';
+import { showSnackbar } from './uiActions';
 
 const loadQuizPending = (quizId) => ({
   type: types.FETCH_QUIZ_PENDING,
@@ -55,6 +56,7 @@ export function createQuiz(quiz) {
     quizApi
       .createQuiz(quiz)
       .then((data) => {
+        dispatch(showSnackbar('Quiz Created!'));
         dispatch(loadQuizzes());
         return data.quizId;
       })

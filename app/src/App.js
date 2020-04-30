@@ -8,6 +8,7 @@ import { ThemeProvider as MuiThemeProvider, makeStyles } from '@material-ui/core
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import * as userActions from './redux/actions/userActions';
 
@@ -42,6 +43,7 @@ const useStyles = makeStyles(() => ({
 
 function App({
   user,
+  snackbar,
   checkAuthentication,
 }) {
   const classes = useStyles();
@@ -84,6 +86,11 @@ function App({
               </>
               : <Login />
           }
+          <Snackbar
+            open={snackbar.open}
+            message={snackbar.message}
+            className={classes.snackbar}
+          />
         </div>
       </Router>
     </MuiThemeProvider>
@@ -92,6 +99,7 @@ function App({
 
 App.propTypes = {
   user: PropTypes.object.isRequired,
+  snackbar: PropTypes.object.isRequired,
   checkAuthentication: PropTypes.func.isRequired,
 };
 
@@ -100,6 +108,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  (state) => ({ user: state.user }),
+  (state) => ({ user: state.user, snackbar: state.ui.snackbar }),
   mapDispatchToProps,
 )(App);

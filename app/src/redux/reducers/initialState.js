@@ -11,4 +11,10 @@ export default {
     data: [],
   },
   quiz: {},
+  ui: {
+    snackbar: {
+      open: false,
+      message: null,
+    },
+  },
 };
