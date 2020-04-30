@@ -36,8 +36,10 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  sb: {
-    background: 'red',
+  snackbar: {
+    [theme.breakpoints.down('xs')]: {
+      bottom: 90,
+    },
   },
 }));
 

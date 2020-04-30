@@ -78,7 +78,10 @@ export function deleteQuiz(quizId) {
     dispatch(deleteQuizPending(quizId));
     return quizApi
       .deleteQuiz(quizId)
-      .then(() => dispatch(deleteQuizSuccess(quizId)))
+      .then(() => {
+        dispatch(deleteQuizSuccess(quizId));
+        dispatch(showSnackbar('Quiz Deleted'));
+      })
       .catch((errors) => dispatch(deleteQuizFailure(quizId, errors)));
   };
 }
