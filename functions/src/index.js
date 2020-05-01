@@ -1,6 +1,5 @@
 import express from 'express';
 import firebase from 'firebase';
-import cors from 'cors';
 import auth from './util/auth';
 import config from './util/config';
 import {
@@ -13,6 +12,7 @@ import {
 import { loginUser, signUpUser, getUser } from './APIs/user';
 import { createTeam } from './APIs/teams';
 
+import cors from './middleware/cors';
 import quizExists from './middleware/quizExists';
 
 const functions = require('firebase-functions');
@@ -21,9 +21,7 @@ const app = express();
 
 firebase.initializeApp(config.firebase);
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-}));
+app.use(cors);
 
 app.get('/quizzes', auth, getAllQuizzes);
 app.get('/quiz/:quizId', auth, getQuiz);
