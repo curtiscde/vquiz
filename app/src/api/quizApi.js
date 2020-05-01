@@ -42,8 +42,15 @@ export function deleteQuiz(quizId) {
 
 export function editQuiz(quiz) {
   return fetch(`${baseUrl}/quiz/${quiz.id}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      'content-type': 'application/json',
+    },
     method: 'PUT',
+    body: JSON.stringify({
+      title: quiz.title,
+      date: quiz.date,
+    }),
   })
     .then(handleResponse)
     .catch(handleError);
