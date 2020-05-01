@@ -11,6 +11,9 @@ import {
   deleteQuiz,
 } from './APIs/quiz';
 import { loginUser, signUpUser, getUser } from './APIs/user';
+import { createTeam } from './APIs/teams';
+
+import quizExists from './middleware/quizExists';
 
 const functions = require('firebase-functions');
 
@@ -31,5 +34,7 @@ app.delete('/quiz/:quizId', auth, deleteQuiz);
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);
 app.get('/user', auth, getUser);
+
+app.post('/team', quizExists, createTeam);
 
 exports.api = functions.region('europe-west1').https.onRequest(app);
