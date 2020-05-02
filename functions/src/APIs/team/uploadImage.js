@@ -45,6 +45,7 @@ export default function uploadImage(req, res) {
       .storage()
       .bucket()
       .upload(imageToBeUploaded.filePath, {
+        destination: `team/${imageFileName}`,
         resumable: false,
         metadata: {
           metadata: {
