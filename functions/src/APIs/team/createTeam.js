@@ -1,7 +1,7 @@
-import firebase from 'firebase';
 import { db } from '../../util/admin';
 import { isEmpty } from '../../util/validators';
 
+// eslint-disable-next-line import/prefer-default-export
 export function createTeam(req, res) {
   const { quizId, name } = req.body;
 
@@ -20,7 +20,7 @@ export function createTeam(req, res) {
 
   try {
     const teams = db
-      .collection(`quiz`)
+      .collection('quiz')
       .doc(quizId)
       .collection('team');
 
@@ -32,13 +32,12 @@ export function createTeam(req, res) {
           return res.status(400).json({ name: 'Already exists' });
         }
         return teams
-          .add(newTeam)
+          .add(newTeam);
       })
       .then((team) => {
         newTeam.id = team.id;
         res.status(200).json(newTeam);
       });
-
   } catch (error) {
     return res.status(500).send();
   }
