@@ -1,8 +1,7 @@
 import { db } from '../../util/admin';
 import { isEmpty } from '../../util/validators';
 
-// eslint-disable-next-line import/prefer-default-export
-export function createTeam(req, res) {
+export default function createTeam(req, res) {
   const { quizId, name } = req.body;
 
   if (isEmpty(quizId)) {
@@ -36,7 +35,7 @@ export function createTeam(req, res) {
       })
       .then((team) => {
         newTeam.id = team.id;
-        res.status(200).json(newTeam);
+        return res.status(200).json(newTeam);
       });
   } catch (error) {
     return res.status(500).send();
