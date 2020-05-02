@@ -29,7 +29,7 @@ export function createTeam(req, res) {
       .get()
       .then((snapshot) => {
         if (!snapshot.empty) {
-          return res.status(400).json({ name: 'Already exists ' });
+          return res.status(400).json({ name: 'Already exists' });
         }
         return teams
           .add(newTeam)
