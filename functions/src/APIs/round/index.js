@@ -5,6 +5,7 @@ import auth from '../../middleware/auth';
 import quizExists from '../../middleware/quizExists';
 import quizOwner from '../../middleware/quizOwner';
 
+import getRounds from './getRounds';
 import createRound from './createRound';
 import deleteRound from './deleteRound';
 import editRound from './editRound';
@@ -12,6 +13,7 @@ import editRound from './editRound';
 const app = express();
 app.use(cors);
 
+app.get('/:quizId', auth, getRounds);
 app.post('/', auth, quizExists, createRound);
 app.delete('/', auth, quizOwner, deleteRound);
 app.put('/', auth, quizOwner, editRound);
