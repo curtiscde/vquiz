@@ -9,6 +9,7 @@ import {
   deleteQuiz,
 } from './APIs/quiz';
 import { loginUser, signUpUser, getUser } from './APIs/user';
+import roundApp from './APIs/round';
 import teamApp from './APIs/team';
 
 import cors from './middleware/cors';
@@ -33,4 +34,5 @@ app.post('/signup', signUpUser);
 app.get('/user', auth, getUser);
 
 exports.api = functions.region('europe-west1').https.onRequest(app);
+exports.round = functions.region('europe-west1').https.onRequest(roundApp);
 exports.team = functions.region('europe-west1').https.onRequest(teamApp);
