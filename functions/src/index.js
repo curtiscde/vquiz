@@ -1,6 +1,5 @@
 import express from 'express';
 import firebase from 'firebase';
-import auth from './util/auth';
 import config from './util/config';
 import {
   getAllQuizzes,
@@ -13,6 +12,7 @@ import { loginUser, signUpUser, getUser } from './APIs/user';
 import teamApp from './APIs/team';
 
 import cors from './middleware/cors';
+import auth from './middleware/auth';
 
 const functions = require('firebase-functions');
 

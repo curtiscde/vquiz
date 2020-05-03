@@ -1,4 +1,4 @@
-import { admin, db } from './admin';
+import { admin, db } from '../util/admin';
 
 export default function (req, res, next) {
   let idToken;

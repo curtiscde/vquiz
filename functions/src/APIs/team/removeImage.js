@@ -1,12 +1,6 @@
-import { db, admin } from '../../util/admin';
+import { db } from '../../util/admin';
 import { isEmpty } from '../../util/validators';
-
-function deleteImage(imageName) {
-  const bucket = admin.storage().bucket();
-  return bucket.file(imageName).delete()
-    .then(() => ({}))
-    .catch(() => ({}));
-}
+import deleteStorage from '../../util/deleteStorage';
 
 export default function removeImage(req, res) {
   const { quizId, teamId } = req.body;
@@ -24,7 +18,7 @@ export default function removeImage(req, res) {
     .get()
     .then((snapshot) => {
       const { imageFileName } = snapshot.data();
-      deleteImage(`team/${imageFileName}`);
+      deleteStorage(`team/${imageFileName}`);
       return doc.update({
         imageFileName: null,
       });
