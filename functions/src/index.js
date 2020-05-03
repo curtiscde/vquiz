@@ -11,6 +11,7 @@ import {
 import { loginUser, signUpUser, getUser } from './APIs/user';
 import roundApp from './APIs/round';
 import teamApp from './APIs/team';
+import scoreApp from './APIs/score';
 
 import cors from './middleware/cors';
 import auth from './middleware/auth';
@@ -36,3 +37,4 @@ app.get('/user', auth, getUser);
 exports.api = functions.region('europe-west1').https.onRequest(app);
 exports.round = functions.region('europe-west1').https.onRequest(roundApp);
 exports.team = functions.region('europe-west1').https.onRequest(teamApp);
+exports.score = functions.region('europe-west1').https.onRequest(scoreApp);
