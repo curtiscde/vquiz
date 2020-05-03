@@ -1,4 +1,3 @@
-import firebaseAdmin from 'firebase-admin';
 import { db, admin } from '../../util/admin';
 import { isEmpty } from '../../util/validators';
 
