@@ -11,7 +11,6 @@ function deleteImage(imageName) {
 
 export default function removeImage(req, res) {
   const { quizId, teamId } = req.body;
-  const { FieldValue } = firebaseAdmin.firestore.FieldValue;
 
   if (isEmpty(quizId)) {
     return res.status(400).json({ quizId: 'Must not be empty' });
