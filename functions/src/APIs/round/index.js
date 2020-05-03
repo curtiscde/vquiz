@@ -3,11 +3,11 @@ import express from 'express';
 import cors from '../../middleware/cors';
 import quizExists from '../../middleware/quizExists';
 
-import createRound from './createRound';
+import create from './create';
 
 const app = express();
 app.use(cors);
 
-app.post('/', quizExists, createRound);
+app.post('/', quizExists, create);
 
 export default app;
