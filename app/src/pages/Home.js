@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: '31px',
     left: '50%',
     top: '35%',
+    marginLeft: '-75px',
   },
   title: {
     marginBottom: 26,
