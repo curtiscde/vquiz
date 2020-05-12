@@ -25,9 +25,10 @@ export default function (req, res) {
       });
     });
 
-    batch.commit()
+    return batch.commit()
       .then(() => res.send());
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
     return res.status(500).send();
   }
