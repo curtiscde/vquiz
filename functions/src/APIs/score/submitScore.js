@@ -21,18 +21,16 @@ function getScoresByTeam(quizId) {
 }
 
 function aggregateScores(quizId, teamScores) {
-  return db
+  const teamCollection = db
     .collection('quiz')
     .doc(quizId)
-    .collection('team')
-    .get()
+    .collection('team');
+
+  return teamCollection.get()
     .then((snapshot) => {
       const teams = [];
       snapshot.forEach((doc) => {
-        db.collection('quiz')
-          .doc(quizId)
-          .collection('team')
-          .doc(doc.id)
+        teamCollection.doc(doc.id)
           .update({
             totalScore: teamScores[doc.id] || 0,
           });
