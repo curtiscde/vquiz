@@ -2,9 +2,9 @@ import groupScoresByTeam from './aggregationHelper';
 
 describe('aggregationHelper', () => {
   describe('groupScoresByTeam', () => {
-    it('should return empty array for empty array', () => {
+    it('should return empty object for empty array', () => {
       const scores = [];
-      expect(groupScoresByTeam(scores)).toEqual([]);
+      expect(groupScoresByTeam(scores)).toEqual({});
     });
 
     it('should return a separate object per team', () => {
@@ -13,10 +13,10 @@ describe('aggregationHelper', () => {
         { docId: 'round1-team2', score: 1 },
       ];
 
-      expect(groupScoresByTeam(scores)).toEqual([
-        { teamId: 'team1', score: 1 },
-        { teamId: 'team2', score: 1 },
-      ]);
+      expect(groupScoresByTeam(scores)).toEqual({
+        'team1': 1,
+        'team2': 1,
+      });
     });
 
     it('should calculate a total score per team', () => {
@@ -29,10 +29,10 @@ describe('aggregationHelper', () => {
         { docId: 'round3-team2', score: 9 },
       ];
 
-      expect(groupScoresByTeam(scores)).toEqual([
-        { teamId: 'team1', score: 12 },
-        { teamId: 'team2', score: 14 },
-      ]);
+      expect(groupScoresByTeam(scores)).toEqual({
+        'team1': 12,
+        'team2': 14,
+      });
     });
   });
 });
