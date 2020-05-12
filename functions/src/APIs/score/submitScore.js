@@ -1,7 +1,7 @@
 import { db } from '../../util/admin';
 import { isEmpty } from '../../util/validators';
 
-export default async function (req, res) {
+export default function (req, res) {
   const { quizId, scores } = req.body;
 
   if (isEmpty(quizId)) {
@@ -12,21 +12,23 @@ export default async function (req, res) {
   }
 
   try {
-    const scoresCol = db
-      .collection('quiz')
-      .doc(quizId)
-      .collection('score');
+    const batch = db.batch();
 
-    await Promise.all(scores.forEach(async (score) => {
-      await scoresCol
-        .doc(`${score.roundId}-${score.teamId}`)
-        .set({
-          score: score.score,
-        });
-    }));
+    scores.forEach((score) => {
+      const docRef = db
+        .collection('quiz')
+        .doc(quizId)
+        .collection('score')
+        .doc(`${score.roundId}-${score.teamId}`);
+      batch.set(docRef, {
+        score: score.score,
+      });
+    });
 
-    return res.send();
+    batch.commit()
+      .then(() => res.send());
   } catch (error) {
+    console.log(error);
     return res.status(500).send();
   }
 }
