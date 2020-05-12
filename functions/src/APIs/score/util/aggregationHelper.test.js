@@ -14,8 +14,8 @@ describe('aggregationHelper', () => {
       ];
 
       expect(groupScoresByTeam(scores)).toEqual({
-        'team1': 1,
-        'team2': 1,
+        team1: 1,
+        team2: 1,
       });
     });
 
@@ -30,8 +30,8 @@ describe('aggregationHelper', () => {
       ];
 
       expect(groupScoresByTeam(scores)).toEqual({
-        'team1': 12,
-        'team2': 14,
+        team1: 12,
+        team2: 14,
       });
     });
   });
