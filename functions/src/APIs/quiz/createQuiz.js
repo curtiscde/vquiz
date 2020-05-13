@@ -1,5 +1,5 @@
 import { db } from '../../util/admin';
-import { isEmpty } from '../../util/validators'
+import { isEmpty } from '../../util/validators';
 
 export default function (req, res) {
   if (isEmpty(req.body.title)) {

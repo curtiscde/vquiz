@@ -1,28 +1,7 @@
 import { db } from '../util/admin';
 import { isEmpty } from '../util/validators';
 
-export function deleteQuiz(req, res) {
-  const document = db.doc(`/quiz/${req.params.quizId}`);
-  document
-    .get()
-    .then((doc) => {
-      if (!doc.exists) {
-        return res.status(404);
-      }
-      if (doc.data().userId !== req.user.uid) {
-        return res.status(403).json({ error: 'Unauthorized' });
-      }
-      return document.delete();
-    })
-    .then(() => {
-      res.json({ message: 'Delete successfull' });
-    })
-    .catch((err) => {
-      console.error(err); // eslint-disable-line no-console
-      return res.status(500).json({ error: err.code });
-    });
-}
-
+// eslint-disable-next-line
 export function editQuiz(req, res) {
   if (isEmpty(req.body.title)) {
     return res.status(400).json({ title: 'Must not be empty' });
