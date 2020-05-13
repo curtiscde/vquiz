@@ -1,27 +1,6 @@
 import { db } from '../util/admin';
 import { isEmpty } from '../util/validators';
 
-export function getQuiz(req, res) {
-  db
-    .doc(`/quiz/${req.params.quizId}`)
-    .get()
-    .then((doc) => {
-      if (!doc.exists) {
-        return res.status(404);
-      }
-      if (doc.data().userId !== req.user.uid) {
-        return res.status(403).json({ error: 'Unauthorized' });
-      }
-      const quizData = doc.data();
-      quizData.id = doc.id;
-      return res.json(quizData);
-    })
-    .catch((err) => {
-      console.error(err); // eslint-disable-line no-console
-      return res.status(500).json({ error: err.code });
-    });
-}
-
 export function createQuiz(req, res) {
   if (isEmpty(req.body.title)) {
     return res.status(400).json({ title: 'Must not be empty' });
