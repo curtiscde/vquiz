@@ -7,8 +7,9 @@ import {
   createQuiz,
   editQuiz,
   deleteQuiz,
-} from './APIs/quiz';
+} from './APIs/quizApi';
 import { loginUser, signUpUser, getUser } from './APIs/user';
+import quizApp from './APIs/quiz';
 import roundApp from './APIs/round';
 import teamApp from './APIs/team';
 import scoreApp from './APIs/score';
@@ -35,6 +36,7 @@ app.post('/signup', signUpUser);
 app.get('/user', auth, getUser);
 
 exports.api = functions.region('europe-west1').https.onRequest(app);
+exports.quiz = functions.region('europe-west1').https.onRequest(quizApp);
 exports.round = functions.region('europe-west1').https.onRequest(roundApp);
 exports.team = functions.region('europe-west1').https.onRequest(teamApp);
 exports.score = functions.region('europe-west1').https.onRequest(scoreApp);
