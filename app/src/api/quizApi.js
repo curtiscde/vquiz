@@ -3,7 +3,7 @@ import { handleResponse, handleError } from './apiUtils';
 const baseUrl = process.env.API_URL;
 
 export function getQuizzes() {
-  return fetch(`${baseUrl}/quizzes`, {
+  return fetch(`${baseUrl}/quiz`, {
     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
   })
     .then(handleResponse)

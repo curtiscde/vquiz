@@ -3,7 +3,7 @@ import { handleResponse, handleError } from './apiUtils';
 const baseUrl = process.env.API_URL;
 
 export function login(fields) {
-  return fetch(`${baseUrl}/login`, {
+  return fetch(`${baseUrl}/api/login`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(fields),
@@ -13,7 +13,7 @@ export function login(fields) {
 }
 
 export function getUser(accessToken) {
-  return fetch(`${baseUrl}/user`, {
+  return fetch(`${baseUrl}/api/user`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   })
     .then(handleResponse)
