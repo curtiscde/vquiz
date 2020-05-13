@@ -1,7 +1,6 @@
 import { db } from '../../util/admin';
 
 export default function (req, res) {
-  console.log('getQuizzes...');
   db
     .collection('quiz')
     .where('userId', '==', req.user.uid)
