@@ -1,5 +1,44 @@
 import { db } from '../../util/admin';
 import { isEmpty } from '../../util/validators';
+import groupScoresByTeam from './util/aggregationHelper';
+
+function getScoresByTeam(quizId) {
+  return db
+    .collection('quiz')
+    .doc(quizId)
+    .collection('score')
+    .get()
+    .then((snapshot) => {
+      const scores = [];
+      snapshot.forEach((doc) => {
+        scores.push({
+          docId: doc.id,
+          score: doc.data().score,
+        });
+      });
+      return groupScoresByTeam(scores);
+    });
+}
+
+function aggregateScores(quizId, teamScores) {
+  const teamCollection = db
+    .collection('quiz')
+    .doc(quizId)
+    .collection('team');
+
+  return teamCollection.get()
+    .then((snapshot) => {
+      const teams = [];
+      snapshot.forEach((doc) => {
+        teamCollection.doc(doc.id)
+          .update({
+            totalScore: teamScores[doc.id] ? teamScores[doc.id].totalScore : 0,
+            roundScores: teamScores[doc.id] ? teamScores[doc.id].rounds : {},
+          });
+      });
+      return teams;
+    });
+}
 
 export default function (req, res) {
   const { quizId, scores } = req.body;
@@ -26,6 +65,8 @@ export default function (req, res) {
     });
 
     return batch.commit()
+      .then(() => getScoresByTeam(quizId))
+      .then((teamScores) => aggregateScores(quizId, teamScores))
       .then(() => res.send());
   } catch (error) {
     // eslint-disable-next-line no-console
