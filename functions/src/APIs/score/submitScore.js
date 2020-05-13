@@ -17,7 +17,7 @@ function getScoresByTeam(quizId) {
         });
       });
       return groupScoresByTeam(scores);
-    })
+    });
 }
 
 function aggregateScores(quizId, teamScores) {
@@ -32,11 +32,12 @@ function aggregateScores(quizId, teamScores) {
       snapshot.forEach((doc) => {
         teamCollection.doc(doc.id)
           .update({
-            totalScore: teamScores[doc.id] || 0,
+            totalScore: teamScores[doc.id] ? teamScores[doc.id].totalScore : 0,
+            roundScores: teamScores[doc.id] ? teamScores[doc.id].rounds : {},
           });
       });
       return teams;
-    })
+    });
 }
 
 export default function (req, res) {

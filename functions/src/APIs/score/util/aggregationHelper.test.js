@@ -14,8 +14,18 @@ describe('aggregationHelper', () => {
       ];
 
       expect(groupScoresByTeam(scores)).toEqual({
-        team1: 1,
-        team2: 1,
+        team1: {
+          totalScore: 1,
+          rounds: {
+            round1: 1,
+          },
+        },
+        team2: {
+          totalScore: 1,
+          rounds: {
+            round1: 1,
+          },
+        },
       });
     });
 
@@ -30,8 +40,22 @@ describe('aggregationHelper', () => {
       ];
 
       expect(groupScoresByTeam(scores)).toEqual({
-        team1: 12,
-        team2: 14,
+        team1: {
+          totalScore: 12,
+          rounds: {
+            round1: 1,
+            round2: 8,
+            round3: 3,
+          },
+        },
+        team2: {
+          totalScore: 14,
+          rounds: {
+            round1: 1,
+            round2: 4,
+            round3: 9,
+          },
+        },
       });
     });
   });
