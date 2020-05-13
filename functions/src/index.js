@@ -2,7 +2,6 @@ import express from 'express';
 import firebase from 'firebase';
 import config from './util/config';
 import {
-  createQuiz,
   editQuiz,
   deleteQuiz,
 } from './APIs/quizApi';
@@ -23,7 +22,6 @@ firebase.initializeApp(config.firebase);
 
 app.use(cors);
 
-app.post('/quiz', auth, createQuiz);
 app.put('/quiz/:quizId', auth, editQuiz);
 app.delete('/quiz/:quizId', auth, deleteQuiz);
 
