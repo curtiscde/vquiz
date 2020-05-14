@@ -24,7 +24,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify('http://localhost:5001/vquiz-332f5/europe-west1/api'),
+      'process.env.API_URL': JSON.stringify('http://localhost:5001/vquiz-332f5/europe-west1'),
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
