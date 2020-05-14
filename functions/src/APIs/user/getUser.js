@@ -1,6 +1,6 @@
-import { db } from '../util/admin';
+import { db } from '../../util/admin';
 
-export function getUser(req, res) {
+export default function (req, res) {
   db
     .collection('user')
     .where('userId', '==', req.user.uid)
