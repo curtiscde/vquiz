@@ -1,9 +1,6 @@
 import express from 'express';
 import firebase from 'firebase';
 import config from './util/config';
-import {
-  editQuiz,
-} from './APIs/quizApi';
 import { loginUser, signUpUser, getUser } from './APIs/user';
 import quizApp from './APIs/quiz';
 import roundApp from './APIs/round';
@@ -20,8 +17,6 @@ const app = express();
 firebase.initializeApp(config.firebase);
 
 app.use(cors);
-
-app.put('/quiz/:quizId', auth, editQuiz);
 
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);

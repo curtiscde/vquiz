@@ -1,8 +1,7 @@
-import { db } from '../util/admin';
-import { isEmpty } from '../util/validators';
+import { db } from '../../util/admin';
+import { isEmpty } from '../../util/validators';
 
-// eslint-disable-next-line
-export function editQuiz(req, res) {
+export default function (req, res) {
   if (isEmpty(req.body.title)) {
     return res.status(400).json({ title: 'Must not be empty' });
   }
