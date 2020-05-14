@@ -1,7 +1,8 @@
 import express from 'express';
 import firebase from 'firebase';
 import config from './util/config';
-import { loginUser, signUpUser, getUser } from './APIs/user';
+import { signUpUser, getUser } from './APIs/userAPI';
+import userApp from './APIs/user';
 import quizApp from './APIs/quiz';
 import roundApp from './APIs/round';
 import teamApp from './APIs/team';
@@ -18,11 +19,11 @@ firebase.initializeApp(config.firebase);
 
 app.use(cors);
 
-app.post('/login', loginUser);
 app.post('/signup', signUpUser);
 app.get('/user', auth, getUser);
 
 exports.api = functions.region('europe-west1').https.onRequest(app);
+exports.user = functions.region('europe-west1').https.onRequest(userApp);
 exports.quiz = functions.region('europe-west1').https.onRequest(quizApp);
 exports.round = functions.region('europe-west1').https.onRequest(roundApp);
 exports.team = functions.region('europe-west1').https.onRequest(teamApp);
