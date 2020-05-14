@@ -1,28 +1,8 @@
 import firebase from 'firebase';
-import { db } from '../util/admin';
-import { validateLoginData, validateSignUpData } from '../util/validators';
+import { db } from '../../util/admin';
+import { validateSignUpData } from '../../util/validators';
 
-export function loginUser(req, res) {
-  const user = {
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-  const { valid, errors } = validateLoginData(user);
-  if (!valid) return res.status(400).json(errors);
-
-  return firebase
-    .auth()
-    .signInWithEmailAndPassword(user.email, user.password)
-    .then((data) => data.user.getIdToken())
-    .then((token) => res.json({ token }))
-    .catch((err) => {
-      console.error(err); // eslint-disable-line no-console
-      return res.status(403).json({ info: 'Incorrect credentials' });
-    });
-}
-
-export function signUpUser(req, res) {
+export default function (req, res) {
   const newUser = {
     username: req.body.username,
     email: req.body.email,
@@ -73,26 +53,5 @@ export function signUpUser(req, res) {
         return res.status(400).json({ email: 'Email already in use' });
       }
       return res.status(500).json({ general: 'Something went wrong, please try again' });
-    });
-}
-
-export function getUser(req, res) {
-  db
-    .collection('user')
-    .where('userId', '==', req.user.uid)
-    .limit(1)
-    .get()
-    .then((snapshot) => {
-      if (snapshot.docs[0].data().userId !== req.user.uid) {
-        return res.status(403).json({ error: 'Unauthorized' });
-      }
-      const { username } = snapshot.docs[0].data();
-      return res.json({
-        username,
-      });
-    })
-    .catch((err) => {
-      console.error(err); // eslint-disable-line no-console
-      return res.status(500).json({ error: err.code });
     });
 }
